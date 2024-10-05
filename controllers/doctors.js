@@ -23,7 +23,7 @@ const getByName = async (req, res) => {
   const result = await mongodb.getDatabase().db().collection('doctors').find({ lastName: query });
   result.toArray().then((doctor) => {
     res.setHeader('Content-Type', 'application/json');
-    res.status(200).json(doctor);
+    res.status(200).json(doctor[0]);
   });
 };
 
