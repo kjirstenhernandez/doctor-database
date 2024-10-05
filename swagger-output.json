@@ -5,7 +5,7 @@
     "description": "Description",
     "version": "1.0.0"
   },
-  "host": "https://doctor-directory.onrender.com",
+  "host": "doctor-directory.onrender.com",
   "basePath": "/",
   "schemes": [
     "http",
