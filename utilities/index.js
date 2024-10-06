@@ -1,9 +1,7 @@
 const utilities = {};
 
-// Error-handling Middleware
-function errorHandler(err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Internal server error' });
-}
+// Global Error-handling Middleware
+utilities.errorHandler = (fn) => (req, res, next) =>
+  Promise.resolve(fn(req, res, next)).catch(next);
 
-module.exports = errorHandler;
+module.exports = utilities;

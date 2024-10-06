@@ -12,6 +12,4 @@ router.get('/', (req, res) => {
 
 router.use('/doctors', require('./doctors'));
 
-router.use(errorHandler);
-
 module.exports = router;
