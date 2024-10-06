@@ -1,4 +1,3 @@
-const { response } = require('express');
 const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
 
@@ -21,10 +20,15 @@ const getOne = async (req, res) => {
 const getByName = async (req, res) => {
   const query = req.params.lastName;
   const result = await mongodb.getDatabase().db().collection('doctors').find({ lastName: query });
-  result.toArray().then((doctor) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.status(200).json(doctor[0]);
-  });
+  result
+    .toArray()
+    .then((doctor) => {
+      res.setHeader('Content-Type', 'application/json');
+      res.status(200).json(doctor);
+    })
+    .catch((error) => {
+      res.status(500).json({ message: 'An error occurred', error });
+    });
 };
 
 // find all doctors in the database
