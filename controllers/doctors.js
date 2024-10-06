@@ -7,11 +7,7 @@ const ObjectId = require('mongodb').ObjectId;
 // find  doctor by ID
 const getOne = async (req, res) => {
   const docID = ObjectId.createFromHexString(req.params.id);
-  const result = await mongodb
-    .getDatabase()
-    .db()
-    .collection('doctors')
-    .find({ _id: docID }, getMore);
+  const result = await mongodb.getDatabase().db().collection('doctors').find({ _id: docID });
   result.toArray().then((doctor) => {
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json(doctor);

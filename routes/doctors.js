@@ -6,6 +6,7 @@ const utilities = require('../utilities/index');
 
 // Pull Contact Info
 router.get('/', doctorsController.getAll); // ALL doctors in the collection
+router.get('/:id', doctorsController.getOne); // ALL doctors in the collection
 router.get('/lastname/:lastName', doctorsController.getByName); // one doctor in the collection // workign on it, not working currently
 
 // Add Doctor
