@@ -22,11 +22,11 @@ router.put(
   '/:id',
   validate.updateDoctorRules(),
   validate.checkValidation,
-  doctorsController.updateDoctor
+  utilities.errorHandler(doctorsController.updateDoctor)
 );
 
 // Delete Doctor
-router.delete('/:id', doctorsController.removeDoctor);
+router.delete('/:id', utilities.errorHandler(doctorsController.removeDoctor));
 
 // Intentional Error for testing
 router.get('/example', (req, res, next) => {
