@@ -9,10 +9,21 @@ router.get('/', doctorsController.getAll); // ALL doctors in the collection
 router.get('/:id', doctorsController.getOne); // One doctor in  collection by ID
 router.get('/lastname/:lastName', doctorsController.getByName); // one doctor in the collection, by last name (workign on it, not working currently)
 
-// Update Doctor
-router.put('/:id', doctorsController.updateDoctor); //  removed validation until I can get the basics working
 // Add Doctor
-router.post('/', utilities.errorHandler(doctorsController.addDoctor)); //  removed validation until I can get the basics working
+router.post(
+  '/',
+  validate.createDoctorRules(),
+  validate.checkValidation,
+  utilities.errorHandler(doctorsController.addDoctor)
+);
+
+// Update Doctor
+router.put(
+  '/:id',
+  validate.updateDoctorRules(),
+  validate.checkValidation,
+  doctorsController.updateDoctor
+);
 
 // Delete Doctor
 router.delete('/:id', doctorsController.removeDoctor);

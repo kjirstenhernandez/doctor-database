@@ -111,6 +111,9 @@ const updateDoctor = async (req, res) => {
 // -----------------------
 
 const removeDoctor = async (req, res) => {
+  if (!ObjectId.isValid(req.params.id)) {
+    res.status(400).json('Invalid ID');
+  }
   const docId = ObjectId.createFromHexString(req.params.id);
   const result = await mongodb.getDatabase().db().collection('doctors').deleteOne({ _id: docId });
   if (result.deletedCount > 0) {
