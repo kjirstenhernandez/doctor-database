@@ -10,15 +10,15 @@ router.get('/:id', doctorsController.getOne); // One doctor in  collection by ID
 router.get('/lastname/:lastName', doctorsController.getByName); // one doctor in the collection, by last name (workign on it, not working currently)
 
 // Add Doctor
-router.post('/', validate.createDoctorRules(), utilities.errorHandler(doctorsController.addDoctor));
+router.post('/', utilities.errorHandler(doctorsController.addDoctor)); //  removed validation until I can get the basics working
 
 // Update Doctor
-router.put(':/id', doctorsController.updateDoctor);
+router.put(':/id', doctorsController.updateDoctor); //  removed validation until I can get the basics working
 
 // Delete Doctor
 router.delete(':/id', doctorsController.removeDoctor);
 
-// Error testing?
+// Intentional Error for testing
 router.get('/example', (req, res, next) => {
   try {
     const data = undefined;
