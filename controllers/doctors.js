@@ -74,52 +74,33 @@ const updateDoctor = async (req, res) => {
   if (!ObjectId.isValid(req.params.id)) {
     res.status(400).json('Invalid doctor selected (no such ID exists)');
   }
-  const docId = ObjectId.createFromHexString({ _id: req.params.id });
-  console.log(docId.createFromHexString({ _id: req.params.id }));
-  const updateFields = {};
-  if (req.body.firstName !== undefined && req.body.firstName !== 'any')
-    updateFields.firstName = req.body.firstName;
-  if (req.body.lastName !== undefined && req.body.lastName !== 'any')
-    updateFields.lastName = req.body.lastName;
-  if (req.body.title !== undefined && req.body.title !== 'any') updateFields.title = req.body.title;
-  if (req.body.specialty !== undefined && req.body.specialty !== 'any')
-    updateFields.specialty = req.body.specialty;
-  if (req.body.organization !== undefined && req.body.organization !== 'any')
-    updateFields.organization = req.body.organization;
-  if (req.body.phone !== undefined && req.body.phone !== 'any') updateFields.phone = req.body.phone;
-  if (req.body.fax !== undefined && req.body.fax !== 'any') updateFields.fax = req.body.fax;
-  if (req.body.website !== undefined && req.body.website !== 'any')
-    updateFields.website = req.body.website;
-  console.log('fields read');
+  const docId = ObjectId.createFromHexString(req.params.id);
+
+  const allowedFields = [
+    'firstName',
+    'lastName',
+    'title',
+    'specialty',
+    'organization',
+    'phone',
+    'fax',
+    'website'
+  ];
+
+  const updateFields = Object.fromEntries(
+    //more concise solution found online
+    allowedFields
+      .filter((field) => req.body[field] !== undefined && req.body[field] !== 'any') //filters only the valid fields
+      .map((field) => [field, req.body[field]])
+  );
+
   const response = await mongodb
     .getDatabase()
     .db()
-    .collection('Contacts')
+    .collection('doctors')
     .updateOne({ _id: docId }, { $set: updateFields });
-  // const allowedFields = [
-  //   'firstName',
-  //   'lastName',
-  //   'title',
-  //   'specialty',
-  //   'organization',
-  //   'phone',
-  //   'fax',
-  //   'website'
-  // ];
-
-  // const updateFields = Object.fromEntries(
-  //   //more concise solution found online
-  //   allowedFields
-  //     .filter((field) => req.body[field] !== undefined && req.body[field] !== 'any') //filters only the valid fields
-  //     .map((field) => [field, req.body[field]])
-  // );
-
-  // const response = await mongodb.getDatabase
-  //   .db()
-  //   .collection('doctors')
-  //   .updateOne({ _id: docId }, { $set: updateFields });
   if (response.modifiedCount > 0) {
-    res.status(204).send();
+    res.status(204).send('Succesfully updated doctor!');
   } else {
     res.status(200).json(response.error || 'Some error occurred while updating the doctor');
   }
