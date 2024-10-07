@@ -60,4 +60,39 @@ const addDoctor = async (req, res) => {
   }
 };
 
-module.exports = { getOne, getAll, getByName, addDoctor };
+// Update doctor already in database
+const updateDoctor = async (req, res) => {
+  if (!ObjectId.isValid(req.params.id)) {
+    res.status(400).json('Invalid doctor selected (no such ID exists)');
+  }
+  const docId = ObjectId.createFromHexString(req.params.id);
+  const allowedFields = [
+    'firstName',
+    'lastName',
+    'title',
+    'specialty',
+    'organization',
+    'phone',
+    'fax',
+    'website'
+  ];
+
+  //more concise solution found online
+  const updateFields = Object.fromEntries(
+    allowedFields
+      .filter((field) => req.body[field] !== undefined && req.body[field] !== 'any') //filters only the valid fields
+      .map((field) => [field, req.body[field]])
+  );
+
+  const response = await mongodb.getDatabase
+    .db()
+    .collection('doctors')
+    .updateOne({ _id: docId }, { $set: updateFields });
+  if (response.modifiedCount > 0) {
+    res.status(204).send();
+  } else {
+    res.status(200).json(response.error || 'Some error occurred while updating the doctor');
+  }
+};
+
+module.exports = { getOne, getAll, getByName, addDoctor, updateDoctor };
