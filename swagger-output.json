@@ -46,50 +46,30 @@
       },
       "post": {
         "description": "",
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/doctors/{id}": {
+      "get": {
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": {
-                  "example": "any"
-                },
-                "lastName": {
-                  "example": "any"
-                },
-                "title": {
-                  "example": "any"
-                },
-                "specialty": {
-                  "example": "any"
-                },
-                "organization": {
-                  "example": "any"
-                },
-                "phone": {
-                  "example": "any"
-                },
-                "fax": {
-                  "example": "any"
-                },
-                "website": {
-                  "example": "any"
-                }
-              }
-            }
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "422": {
-            "description": "Unprocessable Entity"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -114,6 +94,30 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/{doctors}/id": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "doctors",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
