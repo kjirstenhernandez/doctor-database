@@ -6,12 +6,16 @@ const utilities = require('../utilities/index');
 
 // Pull Contact Info
 router.get('/', doctorsController.getAll); // ALL doctors in the collection
-router.get('/:id', doctorsController.getOne); // ALL doctors in the collection
-router.get('/lastname/:lastName', doctorsController.getByName); // one doctor in the collection // workign on it, not working currently
+router.get('/:id', doctorsController.getOne); // One doctor in  collection by ID
+router.get('/lastname/:lastName', doctorsController.getByName); // one doctor in the collection, by last name (workign on it, not working currently)
 
 // Add Doctor
 router.post('/', validate.createDoctorRules(), utilities.errorHandler(doctorsController.addDoctor));
 
+// Update Doctor
+router.put(':/id', doctorsController.updateDoctor);
+
+// Error testing?
 router.get('/example', (req, res, next) => {
   try {
     const data = undefined;
