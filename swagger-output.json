@@ -35,12 +35,9 @@
     "/doctors/": {
       "get": {
         "description": "",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": ""
           }
         }
       },
@@ -56,9 +53,6 @@
     "/doctors/{id}": {
       "get": {
         "description": "",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "id",
@@ -68,8 +62,40 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
           }
         }
       }
@@ -77,9 +103,6 @@
     "/doctors/lastname/{lastName}": {
       "get": {
         "description": "",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "lastName",
@@ -89,59 +112,13 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "default": {
+            "description": ""
           }
         }
       }
     },
-    "/{doctors}/id": {
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "doctors",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "doctors",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/doctors/example": {
+    "/doctors/ex/example": {
       "get": {
         "description": "",
         "responses": {
