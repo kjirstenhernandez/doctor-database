@@ -15,6 +15,9 @@ router.post('/', validate.createDoctorRules(), utilities.errorHandler(doctorsCon
 // Update Doctor
 router.put(':/id', doctorsController.updateDoctor);
 
+// Delete Doctor
+router.delete(':/id', doctorsController.removeDoctor);
+
 // Error testing?
 router.get('/example', (req, res, next) => {
   try {

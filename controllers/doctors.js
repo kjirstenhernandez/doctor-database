@@ -1,10 +1,9 @@
 const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
 
-//Reference for future error handler
-// const ApiError = require('path for error handler');
-
-// find  doctor by ID
+// -----------------------------
+//   Get One Doctor (by ID)
+// -----------------------------
 const getOne = async (req, res) => {
   const docID = ObjectId.createFromHexString(req.params.id);
   const result = await mongodb.getDatabase().db().collection('doctors').find({ _id: docID });
@@ -13,6 +12,10 @@ const getOne = async (req, res) => {
     res.status(200).json(doctor);
   });
 };
+
+// -----------------------------
+//   Get One Doctor (by Name)
+// -----------------------------
 const getByName = async (req, res) => {
   const query = req.params.lastName;
   const result = await mongodb.getDatabase().db().collection('doctors').find({ lastName: query });
@@ -27,7 +30,9 @@ const getByName = async (req, res) => {
     });
 };
 
-// find all doctors in the database
+// -----------------------
+//   Get All Doctors
+// -----------------------
 const getAll = async (req, res) => {
   const result = await mongodb.getDatabase().db().collection('doctors').find();
   result.toArray().then((doctors) => {
@@ -40,7 +45,9 @@ const getAll = async (req, res) => {
 
 // find all doctors in a specialty
 
-// add new doctor to the general database
+// -----------------------
+//   Add New Doctor
+// -----------------------
 const addDoctor = async (req, res) => {
   const doctor = {
     firstName: req.body.firstName,
@@ -60,7 +67,9 @@ const addDoctor = async (req, res) => {
   }
 };
 
-// Update doctor already in database
+// -----------------------
+//     Update Doctor
+// -----------------------
 const updateDoctor = async (req, res) => {
   if (!ObjectId.isValid(req.params.id)) {
     res.status(400).json('Invalid doctor selected (no such ID exists)');
@@ -77,8 +86,8 @@ const updateDoctor = async (req, res) => {
     'website'
   ];
 
-  //more concise solution found online
   const updateFields = Object.fromEntries(
+    //more concise solution found online
     allowedFields
       .filter((field) => req.body[field] !== undefined && req.body[field] !== 'any') //filters only the valid fields
       .map((field) => [field, req.body[field]])
@@ -95,4 +104,18 @@ const updateDoctor = async (req, res) => {
   }
 };
 
-module.exports = { getOne, getAll, getByName, addDoctor, updateDoctor };
+// -----------------------
+//   Remove Doctor
+// -----------------------
+
+const removeDoctor = async (req, res) => {
+  const docId = ObjectId.createFromHexString(req.params.id);
+  const result = await mongodb.getDatabase().db().collection('doctors').deleteOne({ _id: docId });
+  if (result.deletedCount > 0) {
+    res.status(200).send('doctor successfully deleted!');
+  } else {
+    res.status(500).json(result.error || 'Some error occurred while deleting the doctor');
+  }
+};
+
+module.exports = { getOne, getAll, getByName, addDoctor, updateDoctor, removeDoctor };
