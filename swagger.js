@@ -2,8 +2,9 @@ const swaggerAutogen = require('swagger-autogen')();
 
 const doc = {
   info: {
-    title: 'My API',
-    description: 'Description'
+    title: 'Doctor Directory API',
+    description:
+      'A public directory containing all doctors within Utah Valley and their office contact information.'
   },
   host: 'doctor-directory.onrender.com', //'localhost:3000',
   schemes: ['https', 'http']
