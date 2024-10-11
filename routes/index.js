@@ -10,5 +10,6 @@ router.get('/', (req, res) => {
 });
 
 router.use('/doctors', require('./doctors'));
+router.use('/auth', require('./auths'));
 
 module.exports = router;
