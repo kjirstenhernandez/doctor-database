@@ -8,7 +8,7 @@ const baseController = require('../controllers/base');
 router.use('/api-docs', swaggerUi.serve);
 router.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
-router.get('/', utilities.handleErrors(baseController.buildHome));
+router.get('/', baseController.buildHome);
 
 router.use('/doctors', require('./doctors'));
 router.use('/auth', require('./auths'));
