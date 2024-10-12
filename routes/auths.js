@@ -8,7 +8,7 @@ router.get('/login', (req, res) => {
 });
 //auth logout
 router.get('/logout', (req, res) => {
-  res.send('logout page');
+  res.logout();
 });
 
 //auth with google
@@ -22,9 +22,10 @@ router.get(
 //google redirect
 router.get(
   '/google/redirect',
-  passport.authenticate('google', (req, res) => {
-    res.send('cheers');
-  })
+  passport.authenticate('google', { failureRedirect: '/error/' }),
+  (req, res) => {
+    res.redirect('/profile/');
+  }
 );
 
 module.exports = router;

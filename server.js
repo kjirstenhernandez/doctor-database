@@ -5,6 +5,35 @@ const port = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
 const passportSetup = require('./utilities/passport-setup');
 const passport = require('passport');
+const cookieSession = require('cookie-session');
+const dotenv = require('dotenv').config;
+
+// Cookie and Session
+app.use(
+  cookieSession({
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: [process.env.COOKIE_KEY]
+  })
+);
+
+// -- Fix for req.session.regenerate error with Passport 0.6.0
+app.use(function (request, response, next) {
+  if (request.session && !request.session.regenerate) {
+    request.session.regenerate = (cb) => {
+      cb();
+    };
+  }
+  if (request.session && !request.session.save) {
+    request.session.save = (cb) => {
+      cb();
+    };
+  }
+  next();
+});
+
+//initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(bodyParser.json());
 app.use((req, res, next) => {
@@ -13,18 +42,21 @@ app.use((req, res, next) => {
   next();
 });
 
-// Future Error Handling:
-// const ApiError = require('./utilities/error-handling/apiErrors)
-
 //EJS View Engine -- for when I decide to do the frontend
 // app.set('view engine', 'ejs');
 
 // Routes
 app.use('/', require('./routes'));
 
-//initialize passport
-// app.use(passport.initialize());
-// app.use(passport.session());
+//Error-handling Middleware Route
+app.use(async (err, req, res, next) => {
+  console.error(`Error at: "${req.originalUrl}": ${err.message}`);
+  if (err.status == 404) {
+    res.status(404).send({ error: 'Resource not found' });
+  } else {
+    res.status(500).send({ error: 'Oh no! There was a crash.  Maybe try a different route?' });
+  }
+});
 
 //Connect to our database)
 mongodb.initDb((err) => {
