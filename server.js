@@ -1,4 +1,5 @@
 const express = require('express');
+const expressLayouts = require('express-ejs-layouts');
 const app = express();
 const mongodb = require('./data/database');
 const port = process.env.PORT || 3000;
@@ -31,7 +32,7 @@ app.use(function (request, response, next) {
   next();
 });
 
-//initialize passport
+//Initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -42,8 +43,10 @@ app.use((req, res, next) => {
   next();
 });
 
-//EJS View Engine -- for when I decide to do the frontend
-// app.set('view engine', 'ejs');
+//EJS View Engine
+app.use(expressLayouts);
+app.set('layout', './layouts');
+app.set('view engine', 'ejs');
 
 // Routes
 app.use('/', require('./routes'));
