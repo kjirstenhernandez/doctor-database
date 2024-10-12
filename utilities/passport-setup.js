@@ -19,7 +19,7 @@ passport.use(
       // options for google strategy
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: process.env.CALLBACK_URL
+      callbackURL: '/auth/google/redirect' // had this programmed into .env but testing to see if it makes the difference for render?
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
