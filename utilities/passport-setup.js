@@ -25,7 +25,7 @@ passport.use(
       try {
         const currentUser = await users.getUser(profile);
 
-        if (currentUser) {
+        if (currentUser != null) {
           done(null, currentUser);
         } else {
           const newUser = await users.createUser(profile);
