@@ -4,7 +4,9 @@ const passport = require('passport');
 const utilities = require('../utilities');
 
 //auth login
-router.get('/login', passport.authenticate('google'));
+router.get('/login', utilities.isAuthenticated, (req, res) => {
+  res.redirect('/auth/google');
+});
 //auth logout
 router.get('/logout', (req, res) => {
   req.logout((err) => {

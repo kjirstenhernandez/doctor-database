@@ -5,13 +5,18 @@ const validate = require('../utilities/validation');
 const utilities = require('../utilities/index');
 
 // Pull Contact Info
-router.get('/', utilities.errorHandler(doctorsController.getAll)); // ALL doctors in the collection
-router.get('/:id', utilities.errorHandler(doctorsController.getOne)); // One doctor in  collection by ID
-router.get('/lastname/:lastName', utilities.errorHandler(doctorsController.getByName)); // one doctor in the collection, by last name (workign on it, not working currently)
+router.get('/', utilities.isUser, utilities.errorHandler(doctorsController.getAll)); // ALL doctors in the collection
+router.get('/:id', utilities.isUser, utilities.errorHandler(doctorsController.getOne)); // One doctor in  collection by ID
+router.get(
+  '/lastname/:lastName',
+  utilities.isUser,
+  utilities.errorHandler(doctorsController.getByName)
+); // one doctor in the collection, by last name (workign on it, not working currently)
 
 // Add Doctor
 router.post(
   '/',
+  utilities.isAdmin,
   validate.createDoctorRules(),
   validate.checkValidation,
   (req, res, next) => {
@@ -55,6 +60,7 @@ router.post(
 // Update Doctor
 router.put(
   '/:id',
+  utilities.isAdmin,
   validate.updateDoctorRules(),
   validate.checkValidation,
   (req, res, next) => {
@@ -104,6 +110,7 @@ router.put(
 // Delete Doctor
 router.delete(
   '/:id',
+  utilities.isAdmin,
   (req, res, next) => {
     /*  #swagger.auto = false
 

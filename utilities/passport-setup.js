@@ -4,11 +4,18 @@ const dotenv = require('dotenv').config();
 const users = require('../controllers/users');
 
 passport.serializeUser((user, done) => {
+  console.log('Serializing user:', user);
+  console.log('Google Id: ' + user.googleId);
   done(null, user.googleId);
 });
 
 passport.deserializeUser((id, done) => {
+  const timestamp = Date.now();
+  const date = new Date(timestamp);
+  const time = date.toLocaleTimeString();
   users.getUserById(id).then((user) => {
+    console.log('Deserialize user: ', user);
+    console.log('Time: ', time);
     done(null, user);
   });
 });
