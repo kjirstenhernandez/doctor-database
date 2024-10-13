@@ -5,12 +5,16 @@ const ObjectId = require('mongodb').ObjectId;
 //   Get One Doctor (by ID)
 // -----------------------------
 const getOne = async (req, res) => {
-  const docID = ObjectId.createFromHexString(req.params.id);
-  const result = await mongodb.getDatabase().db().collection('doctors').find({ _id: docID });
-  result.toArray().then((doctor) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.status(200).json(doctor);
-  });
+  try {
+    const docID = ObjectId.createFromHexString(req.params.id);
+    const result = await mongodb.getDatabase().db().collection('doctors').find({ _id: docID });
+    result.toArray().then((doctor) => {
+      res.setHeader('Content-Type', 'application/json');
+      res.status(200).json(doctor);
+    });
+  } catch (error) {
+    res.status();
+  }
 };
 
 // -----------------------------
@@ -34,16 +38,20 @@ const getByName = async (req, res) => {
 //   Get All Doctors
 // -----------------------
 const getAll = async (req, res) => {
-  const result = await mongodb.getDatabase().db().collection('doctors').find();
-  result.toArray().then((doctors) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.status(200).json(doctors);
-  });
+  try {
+    const result = await mongodb.getDatabase().db().collection('doctors').find();
+    result.toArray().then((doctors) => {
+      res.setHeader('Content-Type', 'application/json');
+      res.status(200).json(doctors);
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'An error occurred while retrieving list', error });
+  }
 };
 
-// find all doctors in a specific organization
+// TODO: find all doctors in a specific organization
 
-// find all doctors in a specialty
+// TODO: find all doctors in a specialty
 
 // -----------------------
 //   Add New Doctor
@@ -63,7 +71,7 @@ const addDoctor = async (req, res) => {
   if (response.acknowledged) {
     res.status(204).send('Doctor successfully added to directory!');
   } else {
-    res.status(500).json(response.error || 'Some error occurred while creating the user');
+    res.status(500).json(response.error || 'Some error occurred while creating the doctor');
   }
 };
 
@@ -100,9 +108,9 @@ const updateDoctor = async (req, res) => {
     .collection('doctors')
     .updateOne({ _id: docId }, { $set: updateFields });
   if (response.modifiedCount > 0) {
-    res.status(204).send('Succesfully updated doctor!');
+    res.status(200).send('Succesfully updated doctor!');
   } else {
-    res.status(200).json(response.error || 'Some error occurred while updating the doctor');
+    res.status(500).json(response.error || 'Some error occurred while updating the doctor');
   }
 };
 
