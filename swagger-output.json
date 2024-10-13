@@ -99,6 +99,10 @@
                   "type": "string",
                   "example": "any"
                 },
+                "subspecialty": {
+                  "type": "string",
+                  "example": "any"
+                },
                 "organization": {
                   "type": "string",
                   "example": "any"
@@ -210,6 +214,10 @@
                   "example": "any"
                 },
                 "specialty": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "subspecialty": {
                   "type": "string",
                   "example": "any"
                 },
