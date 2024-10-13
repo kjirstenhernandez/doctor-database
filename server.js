@@ -45,7 +45,7 @@ app.use((req, res, next) => {
 
 //EJS View Engine
 app.use(expressLayouts);
-app.set('layout', './layouts');
+app.set('layout', './layouts/layout');
 app.set('view engine', 'ejs');
 
 // Routes

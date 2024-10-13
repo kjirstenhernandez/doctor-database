@@ -1,6 +1,6 @@
 const baseController = {};
 
-baseController.buildHome = () => {
+baseController.buildHome = (req, res) => {
   res.render('index', { title: 'Home' });
 };
 
