@@ -8,7 +8,10 @@ const baseController = require('../controllers/base');
 router.use('/api-docs', swaggerUi.serve);
 router.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
-// router.get('/', baseController.buildHome);
+router.get('/', (req, res) => {
+  res.send('Testing');
+});
+// router.get('/', baseController.buildHome); // will get working after I continue work on frontend
 
 router.use('/doctors', require('./doctors'));
 router.use('/auth', require('./auths'));

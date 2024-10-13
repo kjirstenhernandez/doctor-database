@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const indexRouter = require('./index');
 
 //auth login
 router.get('/login', (req, res) => {
@@ -8,7 +9,12 @@ router.get('/login', (req, res) => {
 });
 //auth logout
 router.get('/logout', (req, res) => {
-  res.logout();
+  req.logout((err) => {
+    if (err) {
+      res.redirect(/error/);
+    }
+    res.redirect('/');
+  });
 });
 
 //auth with google
