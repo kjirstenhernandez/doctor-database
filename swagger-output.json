@@ -5,11 +5,11 @@
     "description": "A public directory containing all doctors within Utah Valley and their office contact information.",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "doctor-directory.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http",
-    "https"
+    "https",
+    "http"
   ],
   "paths": {
     "/api-docs": {
@@ -26,8 +26,8 @@
       "get": {
         "description": "",
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": ""
           }
         }
       }
