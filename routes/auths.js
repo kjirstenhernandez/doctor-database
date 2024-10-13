@@ -1,12 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const indexRouter = require('./index');
+const utilities = require('../utilities');
 
 //auth login
-router.get('/login', (req, res) => {
-  res.send('login page');
-});
+router.get('/login', passport.authenticate('google'));
 //auth logout
 router.get('/logout', (req, res) => {
   req.logout((err) => {
@@ -28,7 +26,7 @@ router.get(
 //google redirect
 router.get(
   '/google/redirect',
-  passport.authenticate('google', { failureRedirect: '/error/' }),
+  utilities.errorHandler(passport.authenticate('google', { failureRedirect: '/login' })),
   (req, res) => {
     res.redirect('/profile/');
   }
