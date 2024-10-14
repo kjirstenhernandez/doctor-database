@@ -1,7 +1,7 @@
 const utilities = {};
 
 /* ------------------------------------
-            Authentication            
+            Error Handler            
  ------------------------------------*/
 
 utilities.errorHandler = (fn) => (req, res, next) =>
@@ -19,7 +19,7 @@ utilities.isAuthenticated = (req, res, next) => {
     console.log('Authenticated, ', req.user);
     return next();
   }
-  res.status(403).send('You do not have authorization to view this page. ');
+  res.send('You do not have authorization to view this page. ');
 
   setTimeout(() => {
     res.redirect('/auth/login');
