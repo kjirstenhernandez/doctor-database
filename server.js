@@ -6,35 +6,39 @@ const port = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
 const passportSetup = require('./utilities/passport-setup');
 const passport = require('passport');
-const cookieSession = require('cookie-session');
+const initializePassport = require('./utilities/passport-setup');
+const session = require('express-session');
 const dotenv = require('dotenv').config;
 
 // Cookie and Session
 app.use(
-  cookieSession({
+  session({
     maxAge: 24 * 60 * 60 * 1000,
-    keys: [process.env.COOKIE_KEY]
+    secret: [process.env.SESSION_SECRET]
   })
 );
 
-// -- Fix for req.session.regenerate error with Passport 0.6.0
-app.use(function (request, response, next) {
-  if (request.session && !request.session.regenerate) {
-    request.session.regenerate = (cb) => {
-      cb();
-    };
-  }
-  if (request.session && !request.session.save) {
-    request.session.save = (cb) => {
-      cb();
-    };
-  }
-  next();
-});
-
 //Initialize passport
+initializePassport();
+
 app.use(passport.initialize());
 app.use(passport.session());
+
+// -- Fix for req.session.regenerate error with Passport 0.6.0
+// app.use(function (req, response, next) {
+//   if (req.session && !req.session.regenerate) {
+//     req.session.regenerate = (cb) => {
+//       cb();
+//     };
+//   }
+//   if (req.session && !req.session.save) {
+//     req.session.save = (cb) => {
+//       cb();
+//     };
+//   }
+//   console.log(req.session);
+//   next();
+// });
 
 app.use(bodyParser.json());
 app.use((req, res, next) => {

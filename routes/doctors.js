@@ -5,7 +5,7 @@ const validate = require('../utilities/validation');
 const utilities = require('../utilities/index');
 
 // Pull Contact Info
-router.get('/', utilities.isUser, utilities.errorHandler(doctorsController.getAll)); // ALL doctors in the collection
+router.get('/', utilities.isAuthenticated, utilities.errorHandler(doctorsController.getAll)); // ALL doctors in the collection
 router.get('/:id', utilities.isUser, utilities.errorHandler(doctorsController.getOne)); // One doctor in  collection by ID
 router.get(
   '/lastname/:lastName',
@@ -16,7 +16,6 @@ router.get(
 // Add Doctor
 router.post(
   '/',
-  utilities.isAdmin,
   validate.createDoctorRules(),
   validate.checkValidation,
   (req, res, next) => {
@@ -53,8 +52,10 @@ router.post(
         #swagger.responses[500] = {
         description: "Internal Service Error" }
     */
+    console.log(req.user);
     next();
   },
+  utilities.isAdmin,
   utilities.errorHandler(doctorsController.addDoctor)
 );
 

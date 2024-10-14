@@ -51,7 +51,7 @@ const getAll = async (req, res) => {
 
 // TODO: find all doctors in a specific organization
 
-// TODO: find all doctors in a specialty
+// TODO: find all doctors in a specialty/subspecialty
 
 // -----------------------
 //   Add New Doctor
