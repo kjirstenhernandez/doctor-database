@@ -5,7 +5,11 @@ const utilities = require('../utilities');
 
 //auth login
 router.get('/login', (req, res) => {
-  res.redirect('/auth/google');
+  if (req.isAuthenticated()) {
+    res.redirect('/profile/');
+  } else {
+    res.redirect('/auth/google');
+  }
 });
 //auth logout
 router.get('/logout', (req, res) => {
