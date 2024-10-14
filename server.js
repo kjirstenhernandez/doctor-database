@@ -13,10 +13,12 @@ const dotenv = require('dotenv').config;
 // Cookie and Session
 app.use(
   session({
-    maxAge: 24 * 60 * 60 * 1000,
+    sore: new MemoryStore({
+      checkPeriod: 86400000
+    }),
     secret: [process.env.SESSION_SECRET]
   })
-);
+); // memoryleak solution found at https://stackoverflow.com/questions/44882535/warning-connect-session-memorystore-is-not-designed-for-a-production-environm
 
 //Initialize passport
 initializePassport();
