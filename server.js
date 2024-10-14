@@ -9,6 +9,7 @@ const passport = require('passport');
 const initializePassport = require('./utilities/passport-setup');
 const session = require('express-session');
 const dotenv = require('dotenv').config;
+const MemoryStore = require('memorystore')(session);
 
 // Cookie and Session
 app.use(
