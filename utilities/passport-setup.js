@@ -3,6 +3,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const dotenv = require('dotenv').config();
 const users = require('../controllers/users');
 
+/* Encapsulation of initialize passport  */
 const initializePassport = () => {
   passport.serializeUser((user, done) => {
     console.log('Serializing user:', user);

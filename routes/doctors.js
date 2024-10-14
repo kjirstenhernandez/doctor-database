@@ -11,7 +11,7 @@ router.get(
   '/lastname/:lastName',
   utilities.isUser,
   utilities.errorHandler(doctorsController.getByName)
-); // one doctor in the collection, by last name (workign on it, not working currently)
+); // one doctor in the collection, by last name
 
 // Add Doctor
 router.post(

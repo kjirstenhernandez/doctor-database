@@ -16,13 +16,13 @@ const getUserById = async (id) => {
 // Create User
 const createUser = async (profile) => {
   const capitalize = (name) => {
-    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase(); //capitalize the given profile
   };
   const user = {
     googleId: profile.id,
     lastName: capitalize(profile.name.familyName),
     firstName: capitalize(profile.name.givenName),
-    status: 'user'
+    status: 'user' //default status
   };
   const response = await mongodb.getDatabase().db().collection('users').insertOne(user);
   if (response.acknowledged) {

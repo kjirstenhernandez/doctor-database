@@ -25,26 +25,10 @@ app.use(
 
 //Initialize passport
 initializePassport();
-
 app.use(passport.initialize());
 app.use(passport.session());
 
-// -- Fix for req.session.regenerate error with Passport 0.6.0
-// app.use(function (req, response, next) {
-//   if (req.session && !req.session.regenerate) {
-//     req.session.regenerate = (cb) => {
-//       cb();
-//     };
-//   }
-//   if (req.session && !req.session.save) {
-//     req.session.save = (cb) => {
-//       cb();
-//     };
-//   }
-//   console.log(req.session);
-//   next();
-// });
-
+//bodyParser & headers
 app.use(bodyParser.json());
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow_origin', '*');
