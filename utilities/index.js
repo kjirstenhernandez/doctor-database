@@ -20,10 +20,6 @@ utilities.isAuthenticated = (req, res, next) => {
     return next();
   }
   res.send('You do not have authorization to view this page. ');
-
-  setTimeout(() => {
-    res.redirect('/auth/login');
-  }, 3000); // 3000 milliseconds (3 seconds)
 };
 
 // Checking that user has user credentials to view
