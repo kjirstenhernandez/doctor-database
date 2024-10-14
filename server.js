@@ -14,7 +14,7 @@ const MemoryStore = require('memorystore')(session);
 // Cookie and Session
 app.use(
   session({
-    sore: new MemoryStore({
+    store: new MemoryStore({
       checkPeriod: 86400000
     }),
     secret: [process.env.SESSION_SECRET]
