@@ -22,7 +22,9 @@ const getOne = async (req, res) => {
 // -----------------------------
 const getByName = async (req, res) => {
   const query = req.params.lastName;
-  const result = await mongodb.getDatabase().db().collection('doctors').find({ lastName: query });
+  console.log(query);
+  const name = query.charAt(0).toUpperCase() + query.slice(1).toLowerCase();
+  const result = await mongodb.getDatabase().db().collection('doctors').find({ lastName: name });
   result
     .toArray()
     .then((doctor) => {
