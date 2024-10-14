@@ -6,18 +6,11 @@ const users = require('../controllers/users');
 /* Encapsulation of initialize passport  */
 const initializePassport = () => {
   passport.serializeUser((user, done) => {
-    console.log('Serializing user:', user);
-    console.log('Google Id: ' + user.googleId);
     done(null, user.googleId);
   });
 
   passport.deserializeUser((id, done) => {
-    const timestamp = Date.now();
-    const date = new Date(timestamp);
-    const time = date.toLocaleTimeString();
     users.getUserById(id).then((user) => {
-      console.log('Deserialize user: ', user);
-      console.log('Time: ', time);
       done(null, user);
     });
   });
@@ -28,7 +21,7 @@ const initializePassport = () => {
         // options for google strategy
         clientID: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
-        callbackURL: '/auth/google/redirect' // had this programmed into .env but testing to see if it makes the difference for render?
+        callbackURL: '/auth/google/redirect'
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
