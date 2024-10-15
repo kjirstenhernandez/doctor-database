@@ -13,8 +13,6 @@ utilities.errorHandler = (fn) => (req, res, next) =>
 
 //General Authentication
 utilities.isAuthenticated = (req, res, next) => {
-  console.log('SessionID: ', req.sessionID);
-  console.log('Session: ', req.session);
   if (req.user || req.isAuthenticated()) {
     console.log('Authenticated, ', req.user);
     return next();

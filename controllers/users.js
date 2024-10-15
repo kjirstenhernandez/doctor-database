@@ -35,8 +35,6 @@ const createUser = async (profile) => {
 
 //Update User
 const updateUser = async (req, res) => {
-  console.log(req.user);
-  console.log(req.params.id);
   if (req.user.googleId != req.params.id) {
     //checking to see that authenticated user is making changes to their own profile
     res.status(400).json('You are not authorized to make changes to this user');
