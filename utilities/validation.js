@@ -60,7 +60,7 @@ validate.updateDoctorRules = () => {
 validate.updateUserRules = () => {
   const fields = [
     { name: 'firstName', message: 'Please provide a first name' },
-    { name: 'lastname', message: 'Please provide a first name' }
+    { name: 'lastName', message: 'Please provide a first name' }
   ];
 
   return fields.reduce((updatedFields, field) => {
