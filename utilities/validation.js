@@ -2,6 +2,18 @@ const { body, validationResult } = require('express-validator');
 const validate = {};
 
 // ---------------------------------
+//       Validation Checker
+// ---------------------------------
+
+validate.checkValidation = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json(errors.array());
+  }
+  next();
+};
+
+// ---------------------------------
 //     Check "Add Doctor" Fields
 // ---------------------------------
 
@@ -16,18 +28,6 @@ validate.createDoctorRules = () => {
     body('fax').trim().isLength({ min: 1 }).withMessage('Please provide a fax number'),
     body('website').trim().isLength({ min: 1 }).withMessage('Please provide website')
   ];
-};
-
-// ---------------------------------
-//       Validation Checker
-// ---------------------------------
-
-validate.checkValidation = (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).json(errors.array());
-  }
-  next();
 };
 
 // ---------------------------------
@@ -54,6 +54,22 @@ validate.updateDoctorRules = () => {
   }, []); //double bracket serve as teh initial value for the accumulator in .reduce() function
 };
 
+// -------------------------------------
+//     Check "Update Profile" Fields
+// -------------------------------------
+validate.updateUserRules = () => {
+  const fields = [
+    { name: 'firstName', message: 'Please provide a first name' },
+    { name: 'lastname', message: 'Please provide a first name' }
+  ];
+
+  return fields.reduce((updatedFields, field) => {
+    if (body[field.name] != undefined && body[field.name] != 'any') {
+      updatedFields.push(body(field.name).trim().isLength({ min: 1 }.withMessage(field.message)));
+    }
+    return updatedFields;
+  }, []);
+};
 // -------------------------------------------
 //     Check "Find Doctor by Last Name" Fields  ** Waiting until we have the primary function working first,
 // --------------------------------------------
