@@ -6,8 +6,8 @@ const doc = {
     description:
       'A public directory containing all doctors within Utah Valley and their office contact information.'
   },
-  host: 'localhost:3000', //'localhost:3000','doctor-directory.onrender.com'
-  schemes: ['http', 'https']
+  host: 'doctor-directory.onrender.com', //'localhost:3000','doctor-directory.onrender.com'
+  schemes: ['https', 'http']
 };
 
 const outputFile = './swagger-output.json';
